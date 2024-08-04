@@ -24,11 +24,12 @@ This is a Next.js application with TypeScript that allows users to make donation
 
 
 ├── app/
-│   └── animal-donation/
-│       └── page.tsx
+│ └── animal-donation/
+│ └── page.tsx
 ├── components/
-│   ├── Button.tsx
-│   └── Select.tsx
+│ ├── Button.tsx
+│ ├── Select.tsx
+│ └── Table.tsx (TransactionHistoryTable.tsx)
 └── README.md
 
 ## Setup
@@ -54,6 +55,12 @@ A client-side button component that handles loading state and styling.
 
 A server-side select component for reusable dropdown functionality.
 
+### Transaction History Table Component (`components/Table.tsx`)
+
+A server-side table component for reusable table to display items in a row.
+
+A server-side select component for reusable dropdown functionality.
+
 ### AnimalDonationPage (`app/animal-donation/page.tsx`)
 
 The main page component that integrates all features of the animal donation application.
@@ -65,6 +72,7 @@ The main page component that integrates all features of the animal donation appl
 - Utilizes TypeScript for improved type safety
 - Employs Tailwind CSS for styling
 - Uses react-toastify for toast notifications
+- Table with alternating row colors for better readability.
 
 ## Usage
 
