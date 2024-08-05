@@ -12,6 +12,8 @@ import Select from '@/components/Select/Select'
 import Button from '@/components/Button/Button'
 import TransactionHistoryTable from '../components/Table/Table'
 
+import { animalsList, zoosList, donationAmountsList } from '@/mockData'
+
 
 type State = {
   purseBalance: number
@@ -33,7 +35,6 @@ const initialState: State = {
   isSameBalance: false,
   currentBalance: 0,
 }
-
 
 
 function reducer(state: State, action: Action): State
@@ -70,27 +71,11 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
 
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(false)
 
-  const animalsData = useMemo(() => [
-    { value: 'Cheetahs', label: 'Cheetahs' },
-    { value: 'Black Caiman', label: 'Black Caiman' },
-    { value: 'Blue Dragon', label: 'Blue Dragon' },
-    { value: 'Komondo Dragon', label: 'Komondo Dragon' },
-  ], [])
+  const animalsData = useMemo(() => [...animalsList], [animalsList]);
 
-const zoosData = useMemo(() => [
-    { value: 'San Diego Zoo', label: 'San Diego Zoo' },
-    { value: 'Memphis Zoo', label: 'Memphis Zoo' },
-    { value: 'Seattle Zoo', label: 'Seattle Zoo' },
-    { value: 'Mississippi Zoo', label: 'Mississippi Zoo' },
-  ], [])
+  const zoosData = useMemo(() => [...zoosList], [animalsList]);
 
- const donationAmountsData = useMemo(() => [
-    { value: '10', label: '$10' },
-    { value: '20', label: '$20' },
-    { value: '40', label: '$40' },
-    { value: '50', label: '$50' },
-    { value: '100', label: '$100' },
-  ], [])
+  const donationAmountsData = useMemo(() => [...donationAmountsList], [donationAmountsList]);
 
   const onSubmit: SubmitHandler<FormInputsProps> = async (data) =>
   {
@@ -160,23 +145,30 @@ const zoosData = useMemo(() => [
                   <form onSubmit={handleSubmit(onSubmit)} className="mx-auto bg-white rounded-2xl shadow-lg p-4 w-full max-h-100  text-indigo-500">
                     <h2 className="text-2xl font-bold text-center mb-4 text-black">Make a Donation</h2>
                     <Select
+                      aria-label="select-animal"
                       label="Select Animal"
                       options={animalsData}
                       {...register('animal', { required: true })}
                     />
                     <Select
+                      aria-label="select-zoo"
                       label="Select Zoo"
                       options={zoosData}
                       {...register('zoo', { required: true })}
                     />
                     <Select
+                      aria-label="select-donation-amount"
                       label="Donation Amount"
                       options={donationAmountsData}
                       {...register('amount', { required: true })}
                     />
-                    <Button type="submit" isLoading={isProcessing || isSubmitting}
+                    <Button
+                      type="submit"
+                      aria-label="submit-donation"
+                      isLoading={isProcessing || isSubmitting}
                       disabled={isButtonDisabled}
-                      className={`mt-8 ${isButtonDisabled ? 'disabled' : ''}`} >
+                      className={`mt-8 ${isButtonDisabled ? 'disabled' : ''}`}
+                    >
                       Submit Donation
                     </Button>
                   </form>
@@ -193,9 +185,9 @@ const zoosData = useMemo(() => [
             <ToastContainer position="top-right" />
           </div>
         </div>
-          <h5 className='text-center text-indigo-700 font-light'>Powered By Coriano Harris</h5>
+        <h5 className='text-center text-indigo-700 font-light'>Powered By Coriano Harris</h5>
       </div>
-        
+
     </>
   )
 }
