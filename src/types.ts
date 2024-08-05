@@ -18,3 +18,8 @@ export type TransactionHistoryTableProps =
         transactions: TransactionProps[],
         showNoHistoryMessage: boolean,
     }
+
+export type DonationFormProps =
+    {
+        isProcessing: boolean,
+    }
