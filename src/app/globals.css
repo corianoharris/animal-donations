@@ -31,3 +31,9 @@ body {
     text-wrap: balance;
   }
 }
+
+.disabled {
+  background-color: #ccc; /* Example background color */
+  cursor: not-allowed;    /* Change cursor to indicate it's disabled */
+  opacity: 0.6;           /* Optional: make it look less prominent */
+}
