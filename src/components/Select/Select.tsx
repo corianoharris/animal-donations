@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
 // Define the type for the props
-interface Option {
+type Option = {
   value: string;
   label: string;
 }
