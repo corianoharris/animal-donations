@@ -16,11 +16,11 @@ import { animalsList, zoosList, donationAmountsList } from '../mockData'
 
 
 type State = {
-  purseBalance: number
-  currentBalance: number
-  isSameBalance: boolean
-  isProcessing: boolean
-  transactions: TransactionProps[],
+  purseBalance: number;
+  currentBalance: number;
+  isSameBalance: boolean;
+  isProcessing: boolean;
+  transactions: TransactionProps[];
 }
 
 type Action =
@@ -34,7 +34,7 @@ const initialState: State = {
   transactions: [],
   isSameBalance: false,
   currentBalance: 0,
-}
+};
 
 
 
@@ -144,31 +144,34 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
           <div className="max-w-4xl w-full bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="bg-gradient-to-r from-purple-500 to-indigo-500 p-6 text-center shadow-lg">
-              <h1 className="text-4xl font-bold text-white">Animal Donation</h1>
+              <h1 className="text-4xl font-bold text-white" data-testid="page-title">Animal Donation</h1>
               <p className="text-white mt-2">Your current balance</p>
               <div className="bg-white rounded-full mx-auto mt-4 p-4 w-24 h-24 flex items-center justify-center shadow-lg">
-                <span className="text-3xl font-bold text-indigo-500">${state.purseBalance}</span>
+                <span className="text-3xl font-bold text-indigo-500" data-testid="balance-amount">${state.purseBalance}</span>
               </div>
             </div>
             <div className="p-3 bg-gray-50">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1">
-                  <form onSubmit={handleSubmit(onSubmit)} className="mx-auto bg-white rounded-2xl shadow-lg p-4 w-full max-h-100  text-indigo-500">
+                  <form onSubmit={handleSubmit(onSubmit)} className="mx-auto bg-white rounded-2xl shadow-lg p-4 w-full max-h-100  text-indigo-500" data-testid="donation-form">
                     <h2 className="text-2xl font-bold text-center mb-4 text-black">Make a Donation</h2>
                     <Select
                       aria-label="select-animal"
+                      data-testid="animal-dropdown"
                       label="Select Animal"
                       options={animalsData}
                       {...register('animal', { required: true })}
                     />
                     <Select
                       aria-label="select-zoo"
+                      data-testid="zoo-dropdown"
                       label="Select Zoo"
                       options={zoosData}
                       {...register('zoo', { required: true })}
                     />
                     <Select
                       aria-label="select-donation-amount"
+                      data-testid="donation-amount-dropdown"
                       label="Donation Amount"
                       options={donationAmountsData}
                       {...register('amount', { required: true })}
@@ -176,6 +179,7 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
                     <Button
                       type="submit"
                       aria-label="submit-donation"
+                      data-testid="submit-donation-btn"
                       isLoading={isProcessing || isSubmitting}
                       disabled={isButtonDisabled}
                       className={`mt-8 ${isButtonDisabled ? 'disabled' : ''}`}
@@ -203,6 +207,6 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
   )
 }
 
-export default AnimalDonationPage
+export default AnimalDonationPage;
 
 
