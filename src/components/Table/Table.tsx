@@ -6,7 +6,7 @@ import { TransactionHistoryTableProps } from '../../types'
 const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ transactions, showNoHistoryMessage }) =>
 {
     return (
-        <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-lg text-black p-4 max-h-full">
+        <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-lg text-black p-4 max-h-full" data-testid="transaction-table">
             <div className='flex justify-around items-center mb-4'>
             <h2 className="text-2xl font-bold text-center ">Transaction History</h2>
             <h5 className='text-2x text-indigo-600'>{transactions.length === 0 ? "" : transactions.length === 1 ? `${transactions.length} receipt` : `${transactions.length} receipts`}</h5>
