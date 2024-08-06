@@ -1,18 +1,18 @@
 // app/animal-donation/page.tsx
 'use client'
 
-import React, { useMemo, useReducer } from 'react'
+import React, { useEffect, useMemo, useReducer } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 
-import { DonationFormProps, FormInputsProps, TransactionProps } from '@/types'
 
-import Select from '@/components/Select/Select'
-import Button from '@/components/Button/Button'
+import { DonationFormProps, FormInputsProps, TransactionProps } from '../types'
+
+import Select from '../components/Select/Select'
+import Button from '../components/Button/Button'
 import TransactionHistoryTable from '../components/Table/Table'
 
-import { animalsList, zoosList, donationAmountsList } from '@/mockData'
+import { animalsList, zoosList, donationAmountsList } from '../mockData'
 
 
 type State = {
@@ -35,6 +35,8 @@ const initialState: State = {
   isSameBalance: false,
   currentBalance: 0,
 }
+
+
 
 
 function reducer(state: State, action: Action): State
@@ -82,6 +84,13 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
 
     const amount = parseInt(data.amount, 10)
 
+    const transaction: TransactionProps = {
+      animal: data.animal,
+      zoo: data.zoo,
+      amount: amount,
+      date: new Date().toISOString(),
+    }
+
     setIsButtonDisabled(true)
 
     if (state.purseBalance === 0)
@@ -113,19 +122,21 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
     // Simulate processing
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    const transaction: TransactionProps = {
-      animal: data.animal,
-      zoo: data.zoo,
-      amount: amount,
-      date: new Date().toISOString(),
-    }
-
     dispatch({ type: 'SUBMIT_DONATION', payload: transaction })
     dispatch({ type: 'SET_PROCESSING', payload: false })
 
     toast.success(`Thanks for donating $${amount} to ${data.zoo} for ${data.animal}. Want to donate again?`)
     reset()
   }
+
+  useEffect(() =>
+  {
+    if (state.purseBalance <= 0)
+    {
+      setIsButtonDisabled(true);
+    } else setIsButtonDisabled(false);
+
+  }, [state.purseBalance]);
 
   return (
     <>
