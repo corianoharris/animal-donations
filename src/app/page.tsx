@@ -18,7 +18,6 @@ import { animalsList, zoosList, donationAmountsList } from '../mockData'
 type State = {
   purseBalance: number;
   currentBalance: number;
-  isSameBalance: boolean;
   isProcessing: boolean;
   transactions: TransactionProps[];
 }
@@ -32,7 +31,6 @@ const initialState: State = {
   purseBalance: 200,
   isProcessing: false,
   transactions: [],
-  isSameBalance: false,
   currentBalance: 0,
 };
 
@@ -57,7 +55,6 @@ function reducer(state: State, action: Action): State
     case 'INSUFFICIENT_FUNDS':
       return {
         ...state,
-        isSameBalance: action.payload,
         currentBalance: state.purseBalance,
       }
     default:
@@ -108,14 +105,8 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
       toast.error(`Insufficient balance. You only have $${state.purseBalance} available.`);
 
       dispatch({ type: 'INSUFFICIENT_FUNDS', payload: true })
-      return;
-    }
-
-    if (state.isSameBalance)
-    {
-      state.purseBalance = state.currentBalance
-    } else dispatch({ type: 'INSUFFICIENT_FUNDS', payload: false })
-
+      return
+    } 
 
     dispatch({ type: 'SET_PROCESSING', payload: true })
 
@@ -131,7 +122,7 @@ const AnimalDonationPage: React.FC<DonationFormProps> = ({ isProcessing }) =>
 
   useEffect(() =>
   {
-    if (state.purseBalance <= 0)
+    if (state.purseBalance === 0)
     {
       setIsButtonDisabled(true);
     } else setIsButtonDisabled(false);
